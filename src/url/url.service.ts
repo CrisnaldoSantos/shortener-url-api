@@ -67,6 +67,16 @@ export class UrlService {
     return url;
   }
 
+  async analytics() {
+    const urls = await this.urlModel
+      .find()
+      .skip(0)
+      .limit(100)
+      .sort({ hits: -1 });
+
+    return urls;
+  }
+
   async remove(id: string) {
     return this.urlModel.deleteOne({ _id: id }).exec();
   }

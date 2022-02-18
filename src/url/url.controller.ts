@@ -23,6 +23,11 @@ export class UrlController {
     return this.urlService.create(createUrlDto);
   }
 
+  @Get('/analytics')
+  getAnaytics() {
+    return this.urlService.analytics();
+  }
+
   @Get()
   findAll() {
     return this.urlService.findAll();
