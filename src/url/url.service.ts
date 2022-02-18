@@ -3,12 +3,14 @@ import { InjectModel } from '@nestjs/mongoose';
 import { CreateUrlDto } from './dto/create-url.dto';
 import { Model } from 'mongoose';
 import { Url, UrlDocument } from './schemas/url.schema';
+import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class UrlService {
   constructor(
     @InjectModel('Url')
     private readonly urlModel: Model<UrlDocument>,
+    private userService: UserService,
   ) {}
 
   generateCode() {
@@ -38,8 +40,10 @@ export class UrlService {
     return { url: `${process.env.SERVER_URL}url/${shortUrl}` };
   }
 
-  async findAll(): Promise<Url[]> {
-    return this.urlModel.find().exec();
+  async findAllByUser(email: string): Promise<Url[]> {
+    const user = await this.userService.findByEmail(email);
+    const urls = this.urlModel.find({ user_fk: user._id }).exec();
+    return urls;
   }
 
   async validateCode(code: string) {
