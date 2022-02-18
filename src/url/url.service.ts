@@ -34,7 +34,8 @@ export class UrlService {
       shortUrl,
       hits: 0,
     });
-    return createdUrl.save();
+    await createdUrl.save();
+    return { url: `${process.env.SERVER_URL}url/${shortUrl}` };
   }
 
   async findAll(): Promise<Url[]> {
@@ -61,6 +62,8 @@ export class UrlService {
   async redirectToShort(shortUrl: string) {
     const url = await this.findByShort(shortUrl);
     url.hits += 1;
+    console.log(url);
+    await url.save();
     return url;
   }
 

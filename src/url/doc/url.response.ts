@@ -28,3 +28,8 @@ export class UrlResponse {
   })
   updatedAt: Date;
 }
+
+export class UrlCreatedResponse {
+  @ApiProperty({ type: String })
+  url: string;
+}
