@@ -37,7 +37,7 @@ export class UrlService {
       hits: 0,
     });
     await createdUrl.save();
-    return { url: `${process.env.SERVER_URL}url/${shortUrl}` };
+    return { url: `${process.env.SERVER_URL}${shortUrl}` };
   }
 
   async findAllByUser(email: string): Promise<Url[]> {
